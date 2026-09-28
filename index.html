@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @keyframes tung{
+            0%{
+                color: black;
+            }
+            50%{
+                color: transparent;
+            }
+            100%{
+                color: black;
+            }
+        }
+        body{
+            background-color: black;
+        }
+        
+        *{
+            font-size: 2rem;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+        button{
+            border-radius: 20px;
+            width: 100px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 1%;
+            border: none;
+            border-bottom: 5px solid gray;
+            border-left: 10px solid gray;
+            font-size:1rem;
+            background-color: black;
+            color: white;
+            
+        }
+        .calculadora {
+            border-radius: 20px;
+            padding: 20px;
+            border-bottom: 5px solid gray;
+            border-left: 10px solid gray;
+            max-width: 440px;
+            background-color: rgb(78, 78, 78);
+            position: absolute ;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            .visor {
+                border-radius: 20px;
+                border-bottom: 5px solid black;
+                border-left: 5px solid black;
+                border-right: 5px solid black;
+                overflow: hidden;
+                width: 100%;
+                max-width: 400px;
+                height: 150px;
+                margin-bottom: 50px;
+                background-color: rgb(26, 116, 30);
+                text-align: right;
+                padding-right: 10px;
+                box-sizing: border-box;
+                color: black;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-size: 1rem;
+                animation: tung 1s infinite linear;
+
+                
+            }
+
+
+            .botoes {
+                .superiores{
+                    display: flex;
+                    justify-content: center;
+                }
+                .horizontal{
+                    display: flex;
+                    justify-content: center;
+                    .numeros {
+                        display: grid; 
+                        grid-template-columns: repeat(3, 100px);
+    
+                        [data-id="0"]{
+                            margin-left: 100px;
+                        }
+                    }
+                    .operadores {
+                        display: grid; 
+                       height: 30px;
+                    }
+                }
+            }
+            .coisinhas {
+                display: flex;
+                flex-direction: column;
+                button{
+                    font-size: .5rem;
+                    width: 100%;
+                }
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <div class="visor"> 
+        </div>
+        <div class="coisinhas">
+
+        </div>
+        <div class="botoes">
+            <div class="superiores">
+
+            </div>
+            <div class="horizontal">
+                
+                <div class="numeros">
+                
+                </div>
+                <div class="operadores">
+    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+<script>
+    const visor = document.querySelector (".visor")
+    const numeros = document.querySelector (".numeros")
+    const criarboga = (nome, proposito,containerB=numeros) =>{
+
+        const botao = document.createElement ("button")
+        botao.innerHTML = nome
+        
+        botao.dataset.id = nome
+
+        if (proposito){
+        botao.addEventListener ("click",proposito)
+        }
+        else{
+            botao.addEventListener ("click",()=>visor.innerHTML+=nome)
+            
+        }
+        containerB.append(botao)
+        return botao
+    }
+    for(let tuctuc = 9; tuctuc >= 0; tuctuc--){
+        criarboga(tuctuc)
+    }
+
+    const operadores = document.querySelector (".operadores")
+    const inserirOperador = (nome, proposito) => criarboga (nome, proposito, operadores)
+    const superiores = document.querySelector (".superiores")
+    const inserirSuperiores = (nome, proposito) => criarboga (nome, proposito, superiores)
+    const inserirOperadorSinal = (nome, containerB) => criarboga (nome, ()=>{
+        const sinais = ["+","-","*","/"]
+        const charAtual = visor.innerHTML.slice(-1)
+        if (sinais.includes (charAtual)){
+            visor.innerHTML = visor.innerHTML.slice(0,-1)
+        }
+
+        visor.innerHTML += nome
+
+    }, containerB)
+    inserirSuperiores("(")
+    inserirSuperiores(")")
+    inserirOperadorSinal("+", operadores)
+    inserirOperadorSinal("-", operadores)
+    inserirOperadorSinal("*", superiores)
+    inserirOperadorSinal("/", superiores)
+    inserirOperador("⛏️", ()=> {
+        
+        visor.innerHTML = visor.innerHTML.slice(0,-1)
+    
+    })
+    inserirOperador("=", ()=> {
+        const valor = visor.innerHTML;
+        
+        if (!valor) return
+        if (valor=="Morceguinho é uma bixona?😳"){
+            visor.innerHTML="SIM ELE É UMA BIXA LOUCA EM PARADISE HILLS!"
+            setTimeout(() => {
+            visor.innerHTML="🤣🤣BIXONA!🤣🤣"
+                
+            }, 4000);
+            return 
+        }
+        const toing = eval (valor)
+        visor.innerHTML = toing
+        if (isNaN(toing)){
+             visor.innerHTML="vc é bixa?"
+            setTimeout(() => {
+            visor.innerHTML="👽👉👌🖕"
+                
+            }, 4000);
+            return
+        }
+        
+    })
+ 
+    const coisinhas = document.querySelector (".coisinhas")
+    const resenha = (nome, proposito) =>{
+      const botao=criarboga (nome, proposito, coisinhas)
+       
+    } 
+
+    resenha("Morceguinho é uma bixona?😳", () => visor.innerHTML="Morceguinho é uma bixona?😳") 
+    resenha("Destruir todos os propositos😡",()=> visor.innerHTML=""
+
+    )
+</script>
+</html>
