@@ -59,7 +59,7 @@
                 border-right: 5px solid black;
                 overflow: hidden;
                 width: 100%;
-                max-width: 400px;
+                max-width: 440px;
                 height: 150px;
                 margin-bottom: 50px;
                 background-color: rgb(26, 116, 30);
@@ -157,6 +157,7 @@
     }
     for(let tuctuc = 9; tuctuc >= 0; tuctuc--){
         criarboga(tuctuc)
+        
     }
 
     const operadores = document.querySelector (".operadores")
@@ -173,6 +174,7 @@
         visor.innerHTML += nome
 
     }, containerB)
+    inserirSuperiores(".")
     inserirSuperiores("(")
     inserirSuperiores(")")
     inserirOperadorSinal("+", operadores)
@@ -196,16 +198,21 @@
             }, 4000);
             return 
         }
-        const toing = eval (valor)
-        visor.innerHTML = toing
-        if (isNaN(toing)){
-             visor.innerHTML="vc é bixa?"
-            setTimeout(() => {
-            visor.innerHTML="👽👉👌🖕"
-                
-            }, 4000);
-            return
-        }
+        try {
+
+            const toing = eval (valor)
+            visor.innerHTML = toing
+            if (isNaN(toing)){
+                 visor.innerHTML="vc é bixa?"
+                setTimeout(() => {
+                visor.innerHTML="👽👉👌🖕"
+                    
+                }, 4000);
+                return
+            }
+        }catch(naoPode) {
+            visor.innerHTML="Para de invenção sua desgraça"
+        } 
         
     })
  
